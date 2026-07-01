@@ -1,6 +1,6 @@
 {
   "version": "1.0.1",
-  "mac": "",
-  "windows": "",
-  "notes": ""
+  "mac": "https://github.com/JGDrummer101/drip-updates/releases/download/v1.0.1/Drip-1.0.1-universal.dmg",
+  "windows": "https://github.com/JGDrummer101/drip-updates/releases/download/v1.0.1/Drip-Setup-1.0.1.exe",
+  "notes": "Windows: fixed plain-text email spacing. Added in-app update checking."
 }
