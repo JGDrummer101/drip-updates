@@ -1,0 +1,39 @@
+name: iOS CI
+
+on:
+  push:
+    branches:
+      - "claude/**"
+      - main
+    paths:
+      - "LevelUpYourLife/**"
+      - ".github/workflows/ios-ci.yml"
+  workflow_dispatch:
+
+jobs:
+  test-and-build:
+    name: Engine tests + iOS build
+    runs-on: macos-15
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: LevelUpYourLife
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Tool versions
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Engine unit tests (SwiftPM, no simulator)
+        run: swift test
+
+      - name: Build app for iOS Simulator
+        run: >
+          xcodebuild build
+          -project LevelUpYourLife.xcodeproj
+          -scheme LevelUpYourLife
+          -destination 'generic/platform=iOS Simulator'
+          CODE_SIGNING_ALLOWED=NO
