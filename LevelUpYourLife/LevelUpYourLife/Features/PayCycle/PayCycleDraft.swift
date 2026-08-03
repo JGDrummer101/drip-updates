@@ -55,12 +55,16 @@ final class PayCycleDraft {
         }
 
         let members = household?.orderedMembers ?? []
-        member1Name = members.first?.displayName ?? "Member 1"
-        member2Name = members.count > 1 ? members[1].displayName : "Member 2"
+        // Locals, not properties: referencing a property inside the closures
+        // below would capture `self` before initialization completes.
+        let firstName = members.first?.displayName ?? "Member 1"
+        let secondName = members.count > 1 ? members[1].displayName : "Member 2"
+        member1Name = firstName
+        member2Name = secondName
 
         let paychecks = lastCycle?.incomeEntries.filter { $0.type == .paycheck } ?? []
-        member1Amount = paychecks.first { $0.owner == member1Name }?.amount ?? 2_350
-        member2Amount = paychecks.first { $0.owner == member2Name }?.amount ?? 2_100
+        member1Amount = paychecks.first { $0.owner == firstName }?.amount ?? 2_350
+        member2Amount = paychecks.first { $0.owner == secondName }?.amount ?? 2_100
 
         splurgeTarget = household?.defaultSplurgeBudget ?? 300
         bufferTarget = household?.minimumBuffer ?? 300
